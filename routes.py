@@ -63,3 +63,36 @@ def increment_replies(trumpet_id):
         { $inc: { "replies": +1 } }
      )
 
+
+## Create a new non-reply trumpet
+@app.route('/trumpets', methods=['POST'])
+def post_trumpet(user_info_id, submit_time, text):
+    mongo.db.trumpet.insert_one(
+        { "user_info_id":, user_info_id,
+          "reply_trumpet_id": null,
+          "submit_time": submit_time,
+          "text": text,
+          "likes": 0,
+          "retrumpets": 0,
+          "replies": 0 }
+    )
+
+
+## Create a new reply trumpet
+@app.route('/trumpets', methods=['POST'])
+def post_trumpet(user_info_id, submit_time, text, reply_trumpet_id):
+    mongo.db.trumpet.insert_one(
+        { "user_info_id":, user_info_id,
+          "reply_trumpet_id": reply_trumpet_id,
+          "submit_time": submit_time,
+          "text": text,
+          "likes": 0,
+          "retrumpets": 0,
+          "replies": 0 }
+    )
+
+
+## Delete an existing trumpet
+@app.route('/trumpets/:trumpet_id', methods=['DELETE'])
+def delete_trumpet(trumpet_id):
+    mongo.db.trumpet.delete_one( { "_id": trumpet_id } ) 
